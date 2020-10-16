@@ -3,7 +3,7 @@
 ## 1. Object, Instance
 
 #### 1.1 Built-in Object
-> Function, Object, Array 등
+- Function, Object, Array 등
 
 #### 1.2 Object
 - Built-in 오브젝트로 생성한 오브젝트
