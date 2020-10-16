@@ -42,26 +42,47 @@ function point() {
 4. 로컬 변수와 글로벌 변수를
    구분한 목적을 생각하라.
 
+## 3. use strick 사용
+#### 3.1 함수 안에서
+- var 키워드를 사용하지 않으면 에러 발생
+```
+"use strict";
+function point() {
+  try {
+    value = 300;
+  } catch(e) {
+    console.log("글로벌 변수 사용 불가");
+  };
+};
+point();
 
-# log()는 console.log()의 약칭
-- log() 실행 결과를 [실행 결과]에 표시
+[실행 결과] 글로벌 변수 사용 불가
+```
+- ES5에서 도입했으나 근본적인 접근은 아님
+#### 3.2 ES6+
+- "use strict"가 디폴트 환경(전체는 아님)
 
-## use strick 사용
-# 함수 안에서
-- var 키워드를 사용하지 않으면
-  에러 발생 [code2.js]
-- ES5에서 도입했으나
-  근본적인 접근은 아님
-# ES6+
-- "use strict"가 디폴트 환경
-- 전체는 아님
-
-## let 변수의 개요
-# let book = "책";
+## 4. let 변수의 개요
+#### 4.1 let book = "책";
 - Block Scope를 가진 변수
 - 변수가 선언된 블록이 스코프
-# 스코프 적용 기준
-- 블록 {}, 문, 표현식 [code3.js]
+#### 4.2 스코프 적용 기준
+- 블록 {}, 문, 표현식
+```
+let sports = "축구";
+
+if (sports) {
+  let sports = "농구";
+  console.log("안: ", sports);
+};
+console.log("밖:", sports);
+
+[실행 결과]
+안: 농구
+밖: 축구
+```
+> let 변수를 사용한다면!!
+>> {}(Block)으로 안과 밖이 _각각의 다른 스코프_를 가지게 된다
 # 블록 {} 안과 밖이 스코프가 다름
 - 변수 이름이 같아도 값이 대체 되지 않음
 
