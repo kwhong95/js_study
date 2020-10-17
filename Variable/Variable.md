@@ -274,3 +274,65 @@ for (let k =0; k < node.children.length; k++) {
 1. var k = 0;을 k = 0;으로 바꿈
 2. 이벤트를 설정할 때의 k 값을 출력한다
 > 블록 단위로 스코프를 가짐
+
+## 8. let 변수와 this
+- 글로벌 오브젝트에서
+> let 변수를 this로 참조 불가
+```js
+var music = "음악";
+let sports = "축구";
+console.log(this.muic, this.sports);
+
+[실행 결과]
+음악, undefined
+```
+1. 현재 위치는 글로벌 오브젝트
+2. `var music = "음악";` : window 오브젝트에 설정
+3. `let sports = "축구";` :window 오브젝트에 설정 되지 않음
+4. `this.music`에서
+  `this`가 window 오브젝트를 참조하여
+  music이 window 오브젝트에 설정되어 있으므로
+  `음악`이 출력
+5. this.sports에서
+  sports가 window에 설정되지 않으므로
+  `undifined`가 출력
+
+- 글로벌 오브젝트에서
+> var과 let 변수가 설정되는 위치 구조
+```js
+"use strict"
+
+debugger;
+// 현재 위치는 글로벌 오브젝트
+
+var globalVar = "글로벌";
+// 글로벌(window) 오브젝트에 설정
+
+let globalLet = "블록";
+/*
+1. 글로벌(window) 오브젝트에 설정되지 않습니다.
+
+2. `Let변수`를 블록 안에 작성해야 하지만
+- 블록이 없으므로 엔진이 블록을 만들고 
+- 이를 스코프로 사용하여 설정하는 개념
+
+3. 오른쪽 Script는 하나의 블록 개념으로
+- <Script>에 작성한 모든 파일에서 공유
+*/
+console.log(this.globalVar);
+/*
+ this가 window 오브젝트를 참조하며
+ - globalVar이 window 오브젝트에 설정
+ - globalVar 값인 글로벌이 출력
+*/
+debugger;
+
+console.log(this.globalLet);
+/*
+1. globalLet은 window 오브젝트에 설정되지 않으므로
+- undifined가 출력
+
+2. 글로벌 오브젝트의 var 변수와 Let 변수의 차이 파악!
+*/
+debugger;
+```
