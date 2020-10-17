@@ -183,3 +183,43 @@ show();
 ```
 > 함수 내부의 스코프에서 변수를 찾는데 없다..
 >> 밖으로 나와서 찾음(스코프 이동)
+
+#### 6.5 try-catch
+- try-catch 문도 블록 스코프
+- try 블록 {} 기준으로
+  > 안과 밖에 같은 이름의 let 변수 선언 가능
+```
+let sports = "축구";
+try {
+  let sports = "농구";
+  console.log("안: ", sports);
+} catch(e) {};
+console.log("밖: ", sports);
+
+[실행결과]
+안: 농구
+밖: 축구
+```
+1. try 블록의 안과 밖에 let sports를 선언
+2. 안과 밖이 스코프가 다르므로 변숫값이 각각 설정
+
+#### 6.6 switch-case
+- switch 문도 블록 스코프
+- switch 블록 기준으로
+> 같은 이름의 let변수 작성 불가
+```
+let item = 1;
+switch (item) {
+  case 1:
+    let sports;
+    break;
+  case 2:
+    // let sports; >> error!
+  default:
+    console.log(sports);
+};
+```
+1. switch 블록 안에서 let을 사용하여 선언한 변수가 있는데
+   다시 let을 사용하여 변수를 선언하므로 error 발생!
+2. 실행 에러가 아닌 컴파일 에러
+
