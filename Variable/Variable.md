@@ -82,24 +82,104 @@ console.log("밖:", sports);
 밖: 축구
 ```
 > let 변수를 사용한다면!!
->> {}(Block)으로 안과 밖이 _각각의 다른 스코프_를 가지게 된다
-# 블록 {} 안과 밖이 스코프가 다름
+>> {}(Block)으로 안과 밖이 각각의 다른 스코프를 가지게 된다
+#### 4.3 블록 {} 안과 밖이 스코프가 다름
 - 변수 이름이 같아도 값이 대체 되지 않음
 
-## let 변수 선언
-# Syntax
-- let name1[=value1][,name2[=value2]] 
->> 대괄호는 생략 가능
-# name1, name2에 변수 이름 작성
+## 5. let 변수 파해치기
+#### 5.1 Syntax
+```
+ let name1[=value1][,name2[=value2]] 
+```
+> 대괄호는 생략 가능
+#### 5.2 name1, name2에 변수 이름 작성
 - 식별자로 사용
 - []는 생략 가능을 나타냄
-- 값을 할당하지 않아도 됨 [code4.js]
+- 값을 할당하지 않아도 됨
+```
+let book;
+let one, two;
+```
+1. let book;
+- 값을 할당하지 않고 변수만선언할 수 있음
+- 초기 값은 undifined가 할당 (사용 불가)
+2. let one, two;
+- 콤파로 구분하여 다수를 선언 가능
+```
+1. let book = "책";
+2. let one = 1, two = (10 + 20);
+3. let five = 5, let six = 6;
+4. let five = 5, var six = 6;
+```
+1. let book = "책";
+  변수를 선언하고 초기값을 할당함
+2. let one = 1, two = (10 + 20);
+  콤마로 구분하여 다수의 변수를 선언하고
+  값을 할당한 형태
+3. let five = 5, let six = 6;
+  SyntaxError 발생
+  let을 처음에 한 번만 작성
+4. let five = 5, var six = 6;
+  콤마로 구분하여
+  let과 var을 같이 사용할수 없음!
 
-## 블록 스코프
-# 블록 기준
+## 6. 블록 스코프
+#### 6.1 블록 기준
 - 중괄호 { code }
 - function name() { code }
 - if (a === 1) { code }
-# 블록 안과 밖이 스코프가 다름
-- 변수 이름이 같아도 값이 대체되지 않음[code3.js]
-# 스코프에 같은 이름 사용 불가
+#### 6.2 블록 안과 밖이 스코프가 다름
+> 변수 이름이 같아도 값이 대체되지 않음
+#### 6.3 특징
+1. if (sports) {...}
+  블록 {} 안과 밖에 let sports를 작성했으며
+  스코프가 다르므로
+  같은 이름을 사용할 수 있다
+2. 변숫값이 대체되지 않고 유지 된다
+3. 블록 안에서 블록 밖의 변수는 접근할 수 있지만
+4. 블록 밖에서 블록 안의 변수는 접근할 수 없음
+```
+let sports = "축구";
+sports = "농구";
+console.log(sports);
+// let sports = "배구"; > 주석 풀시 1번 경우에 해당
+{
+  let sports = "탁구"
+  console.log(sports)
+};
+
+[실행 결과]
+농구
+탁구
+```
+> 스코프에 같은 이름 사용 불가
+#### 6.4 Function Block
+- function name() {}도 블록 스코프
+- function 안과 밖에 같은 이름의 let 변수 선언 가능
+> 스코프가 다르기 때문
+```
+let sports = "축구";
+function show() {
+  let sport = "농구";
+  console.log("안: ", sports);
+};
+show();
+console.log("밖: ", sports);
+
+[실행 결과]
+안: 농구
+밖: 축구
+```
+- function 밖의 let 변수를 function 안에서 사용 가능 : 클로저
+```
+let sports = "축구";
+function show() {
+  console.log(sports);
+};
+show();
+
+[실행 결과]
+축구
+```
+> 함수 내부의 스코프에서 변수를 찾는데 없다..
+>> 밖으로 나와서 찾음(스코프 이동)
