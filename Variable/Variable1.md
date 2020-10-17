@@ -223,3 +223,54 @@ switch (item) {
    다시 let을 사용하여 변수를 선언하므로 error 발생!
 2. 실행 에러가 아닌 컴파일 에러
 
+## 7. let 변수 VS var 변수
+> for() 문에서 반복할 때마다
+- var 변수: 스코프를 갖지 않음
+- let 변수: 스코프를 가짐
+
+#### 7.1 var 변수와 스코프
+```html
+<ul class = sports>
+  <li>축구</li>
+  <li>농구</li>
+  <li>야구</li>
+</ul> 
+```
+
+``` js
+var node = document.querySelector(".sports");
+for (var k = 0; k < node.children.length; k++) {
+  node.children[k].onClick = function(event) {
+    event.target.style.backgroundColor = "yellow";
+    console.log(k);
+  };
+};
+
+[실행 결과]
+3
+3
+3
+```
+1. 어떤 것을 클릭하더라도
+   항상 for() 문이 끝났을 때 값인 3을 출력한다.
+2. var k = 0; 에서 k 변수의 스코프는 함수이다.
+> 전체가 하나의 스코프
+
+#### 7.2 let변수와 스코프
+```html
+위와 동일
+```
+```js
+...
+for (let k =0; k < node.children.length; k++) {
+  ...
+};
+
+[실행결과]
+0
+1
+2
+```
+1. var k = 0;을 k = 0;으로 바꿈
+2. 이벤트를 설정할 때의 k 값을 출력한다
+> 블록 단위로 스코프를 가짐
