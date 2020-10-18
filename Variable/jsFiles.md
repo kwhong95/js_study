@@ -72,7 +72,7 @@ try {
   console.log(globalBlock);
 } catch(e) {
   console.log("globalBlock은 공유되지 않습니다.");
-}
+};
 /*
 {
   Let globalBlock = "block의 Let 변수";

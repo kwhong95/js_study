@@ -22,7 +22,7 @@
 - var 키워드 사용이 정상
 #### 2.2 var 키워드를 작성하지 않으면
 > 글로벌 변수로 간주하는데 이것이 문제 
-```
+```js
 value = 100;
 function point() {
   value = 300;
@@ -45,7 +45,7 @@ function point() {
 ## 3. use strict 사용
 #### 3.1 함수 안에서
 - var 키워드를 사용하지 않으면 에러 발생
-```
+```js
 "use strict";
 function point() {
   try {
@@ -68,7 +68,7 @@ point();
 - 변수가 선언된 블록이 스코프
 #### 4.2 스코프 적용 기준
 - 블록 {} 문 표현식
-```
+```js
 let sports = "축구";
 
 if (sports) {
@@ -112,7 +112,7 @@ let one, two;
 4. let five = 5, var six = 6;
 ```
 1. `let book = "책";`  
-  변수를 선언하고 초기값을 할당함
+   변수를 선언하고 초기값을 할당함
 2. `let one = 1, two = (10 + 20);`  
   `콤마(,)`로 구분하여 다수의 변수를 선언하고
   값을 할당한 형태
@@ -125,20 +125,20 @@ let one, two;
 
 ## 6. 블록 스코프
 #### 6.1 블록 기준
-- 중괄호 { code }
-- function name() { code }
-- if (a === 1) { code }
+- `중괄호 { code }`
+- `function name() { code }`
+- `if (a === 1) { code }`
 #### 6.2 블록 안과 밖이 스코프가 다름
 > 변수 이름이 같아도 값이 대체되지 않음
 #### 6.3 특징
-1. if (sports) {...}
-  블록 {} 안과 밖에 let sports를 작성했으며
-  스코프가 다르므로
+1. `if (sports) {...}`
+  블록 {} 안과 밖에 `let sports`를 작성했으며  
+  스코프가 다르므로  
   같은 이름을 사용할 수 있다
 2. 변숫값이 대체되지 않고 유지 된다
 3. 블록 안에서 블록 밖의 변수는 접근할 수 있지만
 4. 블록 밖에서 블록 안의 변수는 접근할 수 없음
-```
+```js
 let sports = "축구";
 sports = "농구";
 console.log(sports);
@@ -154,10 +154,10 @@ console.log(sports);
 ```
 > 스코프에 같은 이름 사용 불가
 #### 6.4 Function Block
-- function name() {}도 블록 스코프
+- `function name() {}`도 블록 스코프
 - function 안과 밖에 같은 이름의 let 변수 선언 가능
-> 스코프가 다르기 때문
-```
+> `스코프`가 다르기 때문
+```js
 let sports = "축구";
 function show() {
   let sport = "농구";
@@ -170,8 +170,8 @@ console.log("밖: ", sports);
 안: 농구
 밖: 축구
 ```
-- function 밖의 let 변수를 function 안에서 사용 가능 : 클로저
-```
+- function 밖의 `let 변수`를 `function` 안에서 사용 가능 : `클로저`
+```js
 let sports = "축구";
 function show() {
   console.log(sports);
@@ -181,14 +181,14 @@ show();
 [실행 결과]
 축구
 ```
-> 함수 내부의 스코프에서 변수를 찾는데 없다..
->> 밖으로 나와서 찾음(스코프 이동)
+> 함수 내부의 스코프에서 변수를 찾는데 없다?
+>> 밖으로 나와서 찾음(`스코프 이동`)
 
 #### 6.5 try-catch
-- try-catch 문도 블록 스코프
+- `try-catch` 문도 블록 스코프
 - try 블록 {} 기준으로
   > 안과 밖에 같은 이름의 let 변수 선언 가능
-```
+```js
 let sports = "축구";
 try {
   let sports = "농구";
@@ -200,14 +200,14 @@ console.log("밖: ", sports);
 안: 농구
 밖: 축구
 ```
-1. try 블록의 안과 밖에 let sports를 선언
-2. 안과 밖이 스코프가 다르므로 변숫값이 각각 설정
+1. `try 블록`의 안과 밖에 `let sports`를 선언
+2. 안과 밖이 `스코프`가 다르므로 변숫값이 각각 설정
 
 #### 6.6 switch-case
-- switch 문도 블록 스코프
-- switch 블록 기준으로
+- `switch 문`도 블록 스코프
+- `switch 블록 기준`으로
 > 같은 이름의 let변수 작성 불가
-```
+```js
 let item = 1;
 switch (item) {
   case 1:
@@ -219,14 +219,14 @@ switch (item) {
     console.log(sports);
 };
 ```
-1. switch 블록 안에서 let을 사용하여 선언한 변수가 있는데
-   다시 let을 사용하여 변수를 선언하므로 error 발생!
-2. 실행 에러가 아닌 컴파일 에러
+1. **switch 블록** 안에서 let을 사용하여 선언한 변수가 있는데  
+   다시 let을 사용하여 변수를 선언하므로 *error 발생!*
+2. 실행 에러가 아닌 *컴파일 에러*
 
 ## 7. let 변수 VS var 변수
-> for() 문에서 반복할 때마다
-- var 변수: 스코프를 갖지 않음
-- let 변수: 스코프를 가짐
+> `for() 문`에서 반복할 때마다
+- `var 변수`: 스코프를 갖지 않음
+- `let 변수`: 스코프를 가짐
 
 #### 7.1 var 변수와 스코프
 ```html
@@ -251,9 +251,10 @@ for (var k = 0; k < node.children.length; k++) {
 3
 3
 ```
-1. 어떤 것을 클릭하더라도
-   항상 for() 문이 끝났을 때 값인 3을 출력한다.
-2. var k = 0; 에서 k 변수의 스코프는 함수이다.
+1. 어떤 것을 클릭하더라도  
+   항상 **for() 문이 끝났을 때 값**인 3을 출력한다.
+2. `var k = 0;` 에서  
+   k 변수의 **스코프는 함수**이다.
 > 전체가 하나의 스코프
 
 #### 7.2 let변수와 스코프
@@ -276,8 +277,8 @@ for (let k =0; k < node.children.length; k++) {
 > 블록 단위로 스코프를 가짐
 
 ## 8. let 변수와 this
-- 글로벌 오브젝트에서
-> let 변수를 this로 참조 불가
+- **글로벌 오브젝트**에서
+> let 변수를 *this*로 참조 불가
 ```js
 var music = "음악";
 let sports = "축구";
@@ -286,18 +287,18 @@ console.log(this.muic, this.sports);
 [실행 결과]
 음악, undefined
 ```
-1. 현재 위치는 글로벌 오브젝트
+1. 현재 위치는 **글로벌 오브젝트**
 2. `var music = "음악";` : window 오브젝트에 설정
-3. `let sports = "축구";` :window 오브젝트에 설정 되지 않음
-4. `this.music`에서
-  `this`가 window 오브젝트를 참조하여
-  music이 window 오브젝트에 설정되어 있으므로
-  `음악`이 출력
-5. this.sports에서
-  sports가 window에 설정되지 않으므로
+3. `let sports = "축구";` : window 오브젝트에 설정 되지 않음
+4. `this.music`에서  
+  `this`가 window 오브젝트를 참조하여  
+  music이 window 오브젝트에 설정되어 있으므로  
+  **음악**이 출력
+5. `this.sports`에서  
+  sports가 window에 설정되지 않으므로  
   `undifined`가 출력
 
-- 글로벌 오브젝트에서
+- **글로벌 오브젝트**에서
 > var과 let 변수가 설정되는 위치 구조
 ```js
 "use strict"
@@ -312,11 +313,11 @@ let globalLet = "블록";
 /*
 1. 글로벌(window) 오브젝트에 설정되지 않습니다.
 
-2. `Let변수`를 블록 안에 작성해야 하지만
+2. Let변수를 블록 안에 작성해야 하지만
 - 블록이 없으므로 엔진이 블록을 만들고 
 - 이를 스코프로 사용하여 설정하는 개념
 
-3. 오른쪽 Script는 하나의 블록 개념으로
+3. Script는 하나의 블록 개념으로
 - <Script>에 작성한 모든 파일에서 공유
 */
 console.log(this.globalVar);
