@@ -105,7 +105,7 @@ showLocal();
 - `Global` : var 변수 설정 시
 
 ## 다수의 js 파일 사용 정리
-- 글로벌 오브젝트에 작성 시
+#### 글로벌 오브젝트에 작성 시
 ```js
 var globalVar = "var 변수";
 let globalLet = "let 변수";
@@ -120,7 +120,7 @@ let globalLet = "let 변수";
   + `{ let 변수 }` : `Block`에 설정, 공유하지 않음
     + 글로벌 오브젝트에서만 사용하는 로컬 변수로 사용
 
-- 함수에 작성 시
+#### 함수에 작성 시
 ```js
 function showLocal() {
   var localVar = "var 변수";
