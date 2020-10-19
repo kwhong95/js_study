@@ -273,3 +273,71 @@
   `this`가 **window 오브젝트**를 *참조*하게 됨
 
   > 중요한 부분 놓치지 말고 넘어가자!
+
+  ## 7. 화살표 함수와 인스턴스
+  - **인스턴스**에서
+    + 화살표 함수의 작성 **위치**에 따라
+    + `this`가 참조하는 **오브젝트**가 *다름*
+  
+  #### 7.1 prototype에 메소드로 작성
+  ```js
+  var point = 200;
+  const Point = function () {
+    this.point = 100;
+  };
+  Point.prototype.getPoint = () => {
+    console.log(this.point);
+  };
+  new Point().getPoint();
+
+  [실행 결과]
+  200
+  ```
+  1. **property**에 화살표 함수를 연결하면  
+  함수 안에서 `this`가  
+  **글로벌 오브젝트**를 참조
+  2. `console.log(this.point)`에서  
+  **글로벌 오브젝트**의 `point` 값인 *200*을 출력
+
+  #### 7.2 prototype에 메소드 안에 작성
+  ```js
+  const Point = function() {
+    this.point = 100;
+  };
+  Point.prototype.getPoint = function() {
+    const add = () => this.point + 20;
+    console.log(add());
+    [1, 2].forEach((value) => {
+      console.log(this.point + value);
+    })
+  };
+  new Point().getPoint();
+
+  [실행 결과]
+  120
+  101
+  102
+  ```
+  1. **prototype**에 일반 함수를 연결하고  
+    **함수 안에 화살표 함수**를 작성한 형태
+  2. `getPoint()`가 일반 함수이므로  
+  `this`가 생성한 **인스턴스** 참조
+  3. 또한, 화살표 함수에서도  
+  `this`가 생성한 **인스턴스**를 참조
+  4. 화살표 함수의 **스코프**인 `getPoint()`의  
+  `this`를 사용하기 때문
+
+  #### 7.3 화살표 함수의 특징
+  - *function* 대신 `=>` 를 사용, 함수 표현식 형태  
+    + *prototype*이 없으므로 함수가 **가볍다**
+    + *constructor*가 없으므로  
+    *new 연산자*로 **인스턴스**를 생성할 수 없다
+  - 화살표 함수에 `this`가 없다
+    + 화살표 함수로 **Function 오브젝트**를 생성할 때
+    + 정적으로 화살표 함수가 속한 스코프의 `this`를   
+    화살표 함수에 **바인딩**한다
+    + 바인딩된 `this` 참조가 바뀌지 않으며  
+    화살표 함수에서 `this`로 사용
+    + 일반 함수는 `call()` 등으로 바꿀 수 있다
+  - *메소드*보다 **함수**로 사용하는 것이 **효율성**이 높다
+  > **단독**으로 사용하는 것이 좋다!
