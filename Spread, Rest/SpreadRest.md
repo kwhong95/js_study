@@ -149,11 +149,118 @@ console.log(result);
 
 ## 3. Rest 파라미터
 #### 3.1 function spread
-- 호출하는 함수 파라미터에  
-spread 대상 작성
-- 처리 순서 및 방법
+- 호출하는 **함수 파라미터**에  
+**spread 대상** 작성
+- **처리 순서 및 방법**
   + 함수가 호출되면  
   우선, 파라미터의 배열을  
-  엘리먼트 단위로 전개
-  + 전개한 순서대로 파라미터 값으로 넘겨 줌
-  + 호출받는 함수의 파라미터에 순서대로 매핑됨
+  엘리먼트 단위로 **전개**
+  + 전개한 **순서대로** 파라미터 값으로 넘겨 줌
+  + 호출받는 함수의 파라미터에 순서대로 **매핑**됨
+```js
+function add(one, two, three) {
+  console.log(one + two + three);
+};
+
+const values = [10, 20 ,30];
+add(...value);
+
+[실행 결과]
+60
+```
+- `one: 10, two: 20, three: 30` 이 매핑된다
+
+#### 3.2 rest 파라미터
+- **Syntax** :
+```js
+function (param, paramN, ...name);
+```
+- 분리하여 받은 파라미터를 배열로 **결합**
+  + `spread`: 분리  
+  + `rest`: 결합
+```js
+function point(...param) {
+  console.log(param);
+  console.log(Array.isArray(param));
+};
+const values = [10, 20, 30];
+point(...value);
+
+[실행 결과]
+[10, 20, 30]
+true
+```
+- **작성 방법**
+  + 호출받는 함수의 파라미터에
+  + ...에 이어서 파라미터 **이름** 작성
+  + 호출한 함수에서 **보낸 순서로 매핑**
+- 파라미터와 Rest 파라미터 **혼합** 사용
+```js
+function point(ten, ...point) {
+  console.log(ten);
+  console.log(rest);
+};
+const values = [10, 20, 30];
+point(...values);
+
+[실행 결과]
+10
+[20, 30]
+```
+1. `ten`에 10이 설정됨
+2. 설정되지 않은 **나머지 값** 전체가  
+  파라미터 `rest`에 설정됨  
+  그래서 **rest 파라미터**라 칭함
+3. 나머지라는 시맨틱을 나타내기 위해  
+  파라미터 이름은 `rest`로 사용하기도 함
+   
+#### 3.3 Array-like
+- **Object** 타입이이지만
+  + 배열처럼 **이터러블** 가능한 오브젝트
+  + `for()` 문으로 전개할 수 있음
+- **작성 방법**
+  + 프로퍼티 `key` 값을 0부터  
+  1씩 증가하면서 프로퍼티 값을 작성
+  + `length`에 전체 프로퍼티 수 작성
+```js
+const values = {0: "가", 1: "나", 2: "다",
+                length: 3};
+for (let k = 0; k < values.length; k++) {
+  console.log(value[k]);
+}
+
+[실행 결과]
+가
+나
+다
+```
+1. `length` 프로퍼티는 전개되지 않음
+2. `for~in` 문으로 전개하면  
+  `length` 프로퍼티도 전개됨
+
+#### 3.4 rest와 argument 차이
+- **Argument 오브젝트**
+  + 파라미터 작성에 관계없이 **전체**를 설정
+  + **Array-like** 형태  
+  Array 메소드를 사용할 수 없음
+  + `__proto__`가 Object
+```js
+function book() {
+  const param = arguments;
+};
+  book(10, 20 ,30);
+```
+> **arguments**의 `__proto__`가 Object
+
+- **rest 파라미터**
+  + **매핑되지 않은** 나머지 파라미터만 설정
+  + **Array** 오브젝트 형태  
+  **Array** 메소드를 사용할 수 있음
+  + `__proto__`가 **Array**
+```js
+function point(...rest) {
+  debugger;
+};
+point(10, 20 ,30);
+```
+
