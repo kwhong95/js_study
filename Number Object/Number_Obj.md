@@ -26,7 +26,7 @@
 
   ## 4. Number 상수
 |상수 이름|상수 값|
-|---|---|---|
+|---|---|
 |Number.MAX_SAFE_INTEGER|9007199254740991 (2의 53승 -1)|
 |Number.MIN_SAFE_INTEGER|-9007199254740991 (-(2의 53승 -1))|
 - **safe integer**란
