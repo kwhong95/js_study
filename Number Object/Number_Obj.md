@@ -130,3 +130,147 @@ console.log(value);
 ```
 ## 6 Number 함수
 #### 6.1 isNaN()
+> is `undefined` 냐? 질문하는 느낌
+|구분|데이터(값)|
+|---|---|
+|형태|`Number.isNaN()`|
+|파라미터|비교 대상|
+|반환|Nan이면 true, 아니면 false|
+- NaN 값의 여부를 체크
+  + NaN 값이면 true, 아니면 false 반환
+```js
+console.log(Number.isNaN("ABC"), isNaN("DEF"));
+console.log(Number.isNaN(NaN), isNaN(NaN));
+console.log(Number.isNaN(0 / 0), isNaN(0 / 0));
+console.log(Number.isNaN("100"), isNaN("200"));
+
+[실행 결과]
+ false, true
+ true, true
+ true, true
+ false, false
+ ```
+ 1. 글로벌 오브젝트의 `isNaN("DEF")`  
+ 값 타입이 아닌 Number가 아닌 것을 체크함
+ DEF가 **String 타입**이므로 `true` 반환
+ 2. NaN과 0/0 은 값이 NaN이므로 `true` 반환
+ 3. `Number.isNaN("ABC")`  
+ 값이 NaN가 아니므로 `false` 반환
+ 4. 글로벌 오브젝트의 `isNaN("200")`  
+ 값을 숫자로 변환하고 그 결과를 비교함  
+ 변환한 값이 200이 Number이므로 `false` 반환
+
+ - **NaN 체크 방법**
+  + `NaN === NaN`  
+  결과가 `false` 이므로 **사용 불가**
+  + `isNaN()`, **글로벌 오브젝트**
+  + `Number.isNaN()`
+  + `Object.is(NaN, NaN)` : `true`
+
+#### 6.2 isInteger()
+|구분| 데이터(값)|
+|---|---|
+|형태| `Number.isInteger()`|
+|파라미터| 비교 대상|
+|반환| 정수이면 true, 아니면 false|
+- 파라미터 값이 정수이면 `true`  
+아니면 `false` 반환
+- 정수로 인식
+```js
+console.log(Number.isInteger(0));
+console.log(Number.isInteger(1.0));
+console.log(Number.isInteger(1.01));
+
+[실행 결과]
+true
+true
+false
+```
+- 정수가 아닌 것으로 인식
+```js
+console.log(Number.isInteger("12"));
+console.log(Number.isInteger(true));
+
+[실행 결과]
+false
+false
+```
+1. 값을 Number로 변환하여 체크하지 않음
+2. Number로 변환하면, "12"와 true가  
+Number 이므로 정수로 인식됨
+  
+#### 6.3 isSafeInteger()
+|구분|데이터(값)|
+|---|---|
+|형태| `Number.isSafeInteger()`|
+|파라미터| 비교 대상|
+|반환| safe 정수이면 true, 아니면 false|
+
+- 파라미터 값이 safe 정수이면 true  
+아니면 false 반환
+- -(2의 53승 - 1) ~ (2의 53승 -1): `true`
+- **true로 인식**
+```js
+const isSafe = Number.isSafeInteger;
+console.log(isSafe(7.0)); // 정수이며, safe 범위에 속함
+console.log(isSafe(Number.MAX_SAFE_INTEGER));
+console.log(isSafe(Number.MIN_SAFE_INTEGER));
+
+[실행 결과]
+true
+true
+true
+```
+- **false로 인식**
+```js
+const isSafe = Number.isSafeInteger;
+console.log(isSafe(7.1));
+console.log(isSafe("100"));
+console.log(isSafe(NaN));
+console.log(isSafe(Infinity));
+
+[실행 결과]
+false
+false
+false
+false
+```
+1. 7.1은 정수가 아님
+2. 값을 Number로 변환하여 체크하지 않음
+3. Number로 변환하면,  
+"100"이 Number이므로 정수로 인식됨
+
+#### 6.4 isFinite()
+|구분|데이터(값)|
+|---|---|
+|형태|`Number.isFinite()`|
+|파라미터| 비교 대상|
+|반환| 유한 값이면 true, 아니면 false|
+- 파라미터 값이 유한 값이면 true  
+아니면 false 반환
+- 글로벌 오브젝트의 `isFinite()`와  
+체크 결과가 다름
+```js
+const num = Number.isFinite,
+      global = isFinite;
+console.log(num(100), global(200));
+console.log(num("70"), global("80"));
+console.log(num(true), global(true));
+
+console.log(num(NaN), global(NaN));
+console.log(num(undefined), global(undefined));
+
+[실행 결과]
+true, true
+false, true
+false, true
+false, false
+false, false
+```
+1. 글로벌 오브젝트의 `isFinite()`는  
+파라미터 값을 **Number로 변환**하여 체크함
+
+- 함수는 오브젝트에 속해야 하므로  
+Number와 관련된 것은  
+**Number 오브젝트**의 함수 사용  
+**글로벌 오브젝트**의 함수는 **글로벌 사용**이 목적
