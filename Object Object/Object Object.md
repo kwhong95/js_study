@@ -577,6 +577,7 @@ console.log(newObj.setPoint); //undefined
 ```
 
 ## 7. __proto__에 메소드 추가
+> 7절~ 마지막 절까지 비교하며 구분해볼것!!!
 #### 7.1 메소드 추가
 - `__proto__`에 `function`을 추가하면  
   + **prototype**에 설정됨
@@ -638,8 +639,8 @@ beforeObj.setPoint(700);
 - 있으면 `__proto__`가 아니라 `Book.prototype`의
 - `setPoint()`를 호출하기 때문
 
-## 8. setPrototypeOf(): 인스턴스 사용
-#### 8.1 setPrototypeOf()
+## 8. setPrototypeOf()
+#### 8.1 setPrototypeOf(): 인스턴스 사용
 |구분| 데이터(값)|
 |---|---|
 |형태|`Object.setPrototypeOf()`|
@@ -692,3 +693,56 @@ obj.forEach(callback);
 const check = Object.prototype;
 // Object.prototype이 바뀌지 않음
 ```
+#### 8.2 setPrototypeOf(): prototype 사용
+|구분|데이터(값)|
+|---|---|
+|형태|`Object.setPrototypeOf()`|
+|파라미터|오브젝트 또는 인스턴스 / 오브젝트의 prototype 또는 null|
+|반환| 첫 번째 파라미터|
+- 첫 번째 파라미터에 **prototype**을 작성
+- 첫 번째 파라미터의 **prototype**에
+  + 두 번째 파라미터의 **prototype**에  
+  연결된 프로퍼티를 설정
+- **prototype 연결 후의 인스턴스 구조**
+```js
+function Book() { };
+Book.prototype.getBook = function() { };
+
+function Point() { };
+Point.prototype.getPoint = function() { };
+
+Object.setPrototypeOf(Point.prototype, Book.prototype);
+```
+1. `Point.prototype`에
+- `Book.prototype`에 연결된 프로퍼티를 설정함
+2. `Point.prototype`에 설정하므로 이것을 펼치면
+- `Book.prototype.getBook()`이 있어야 하는데 *없음*
+3. 또한, `Point.prototype`에 연결한 메소드가
+- 지워지지 않고 유지됨
+4. 한편, `Point.prototype.__proto__`를 펼치면
+-  `getBook()`이 표시됨
+5. `setPrototypeOf()` 함수 이름의 뉘앙스가
+- prototype에 설정하는 것처럼 보이지만
+- prototype에 `__proto__`를 만들고 여기에 **설정**
+6. prototype에 설정하면 `getPoint()`가 지워지므로
+- Point에 작성된 메소드를 사용할 수 없게 됨
+7. 이를 피하기 위해 `__proto__`를 만들어 설정한 것
+8. `__proto__`로 구조적으로 계층을 만들어 설정하므로
+- 같은 이름의 메소드가 있더라도 대체되지 않음
+9. 식별자 해결을 할 때, `__proto__` 순서로 검색하므로
+- 같은 이름의 메소드가 있을 때,
+- 앞의 메소드가 호출 됨
+```js
+const obj = new Point(300);
+```
+1. `new Point(300)`를 실행하면
+- `Point.prototype`에 연결된 메소드로 **인스턴스를 생성**함
+2. 오른쪽 obj를 펼치면
+- `obj.__proto__.__proto__`구조임
+- 이것은 `Point.prototype` 구조와 같음
+3. 위의 `__proto__`에 `Point.prototype`에 연결된 메소드가 설정
+- 아래의 `__proto__`에 `Book.prototype`에 연결된 메소드가 설정
+  
+- **상속을 위한 목적**이라면
+  + `super` 등의 **상속 처리 키워드를 제공**하는
+  + **Class**를 사용하는 것이 좋음
