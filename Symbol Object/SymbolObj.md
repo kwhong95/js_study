@@ -183,4 +183,87 @@ Object의 프로퍼티 키로 사용함
 3. [sym] 처럼 대괄호 안에  
 Symbol() 할당한 변수 이름을 작성함
 4. 이를 `symbol-keyed property`라고 부름
-  + **프로퍼티 값 추출 방법**
++ **프로퍼티 값 추출 방법**
+```js
+const sym = Symbol("설명");
+const obj = {[sym]: 100};
+console.log(obj[sym]);
+console.log(obj.sym);
+
+[실행 결과]
+100
+undefined
+```
+1. `obj[sym]`  
+Symbol() 결과를 할당한 sym을  
+프로퍼티 키로 사용하여 값을 구함
+2. 프로퍼티 값인 100이 출력됨
+3. `obj.sym`  
+undefined가 출력되며  
+`obj[sym]` 형태를 사용해야 함
+  
+- **Object에서 함수 이름으로 사용**
+```js
+const sym = Symbol("함수 이름");
+const obj = {
+  [sym](param) {
+    return param;
+  }
+};
+console.log(obj[sym](200));
+
+[실행 결과]
+200
+```
+1. `[sym](param){}` 형태로 함수를 정의하고
+2. `obj[sym](200)` 형태로 호출함
+  
+- for-in 문에서 사용
+  + Symbol이 열거되지 않음
+  + `[[Enumerable]]: false` 이기 떄문
+```js
+const obj = {
+  [Symbol("100")]: 100,
+  two: 200
+};
+for (let key in obj) {
+  console.log(key);
+};
+
+[실행 결과]
+two
+```
+1. Object에 `symbol-keyed` 프로퍼티를  
+사용하여 프로퍼티 값을 작성했음
+2. **for-in 문**으로 열거되지 않음  
+에러가 나지 않음
+- `Object.getOwnPropertySymbol()` 로 열거 가능
+- `for-of`문에서 사용 
+  + 배열 안에 `Symbol()` 작성
+```js
+const list = [Symbol("100")];
+for (let value of list) {
+  console.log(value);
+};
+
+[실행 결과]
+Symbol(100)
+```
+- `JSON.stringify()` 에서 사용
+  + **Symbol 값이 문자열로 변환되지 않음**
+```js
+const sym = Symbol("JSON");
+const result =
+  JSON.stringify({[sym]: "ABC"});
+console.log(result);
+
+[실행결과]
+{}
+```
+1. `JSON.stringify()`는  
+Object의 프로퍼티 키와 값을
+`{"key": "value"}` 형태로 변환함
+2. Symbol은 변환에서 제외
+3. 이것은, Symbol 값을 외부에  
+노출하지 않기 위해서임
+4. 빈 오브젝트가 반환됨
