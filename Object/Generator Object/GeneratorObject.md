@@ -798,4 +798,4 @@ console.log(obj.next());
   + 첫 번째 줄의 `yield point;`를 실행함
   + `{value: 30, done: false}` 반환
 4. **{주의} yield point; 가 없으면**
-  + **무한 반복**을 하게 됨!
+  + **무한 반복**을 하게 됨!  
